@@ -1,0 +1,98 @@
+.tajwid-legend {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.legend-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.legend-toggle:hover {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.rules-count {
+  margin-left: auto;
+  background: var(--primary);
+  color: white;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 0.75rem;
+  margin-right: 8px;
+}
+
+.legend-content {
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border-light);
+  animation: fadeIn 0.2s ease;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.legend-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.legend-info {
+  flex: 1;
+}
+
+.legend-names {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.legend-name-fr {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.legend-name-ar {
+  font-family: var(--font-arabic);
+  font-size: 1rem;
+  color: var(--text-secondary);
+  direction: rtl;
+}
+
+.legend-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}

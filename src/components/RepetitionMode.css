@@ -1,0 +1,232 @@
+.repetition-mode {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.rep-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.rep-header-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.rep-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.rep-header p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+/* Settings */
+.rep-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.rep-setting-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--text-muted);
+}
+
+.rep-setting-group svg {
+  flex-shrink: 0;
+}
+
+.rep-setting-group label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.rep-options {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.rep-opt {
+  padding: 4px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rep-opt:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.rep-opt.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.rep-opt:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Quick select */
+.quick-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.quick-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Verse selector grid */
+.verse-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  margin-bottom: 14px;
+}
+
+.verse-sel-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verse-sel-btn:hover:not(:disabled) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.verse-sel-btn.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.verse-sel-btn.current {
+  box-shadow: 0 0 0 2px var(--gold);
+  transform: scale(1.1);
+}
+
+.current-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 1s infinite;
+}
+
+/* Summary */
+.rep-summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.rep-summary span:last-child {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* Progress */
+.rep-progress {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.rep-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.rep-current-text {
+  font-family: var(--font-arabic);
+  font-size: 1.3rem;
+  line-height: 2;
+  color: var(--text-primary);
+  margin-top: 10px;
+  animation: pulse 2s infinite;
+}
+
+/* Controls */
+.rep-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.stop-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+}
+
+.stop-btn:hover {
+  background: #c0392b;
+}

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create *)",
+      "Bash(cmd.exe /c \"node --version && npm --version\")",
+      "Bash(cmd.exe /c \"node -v\")",
+      "Bash(cmd.exe /c \"npm -v\")",
+      "Bash(powershell.exe -Command \"node --version; npm --version\")"
+    ]
+  }
+}

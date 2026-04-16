@@ -1,0 +1,372 @@
+.home-page {
+  overflow: hidden;
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  padding: 80px 0 60px;
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image:
+    radial-gradient(circle at 20% 50%, var(--gold) 1px, transparent 1px),
+    radial-gradient(circle at 80% 20%, var(--gold) 1px, transparent 1px),
+    radial-gradient(circle at 50% 80%, var(--gold) 1px, transparent 1px);
+  background-size: 60px 60px, 80px 80px, 100px 100px;
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  color: white;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.hero-arabic {
+  font-family: var(--font-arabic);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.4;
+  color: var(--gold-light);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-french {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 700;
+  color: white;
+}
+
+.hero-subtitle {
+  max-width: 540px;
+  margin: 0 auto 32px;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.hero-cta {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.hero-cta .btn-outline {
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
+}
+
+.hero-cta .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: white;
+}
+
+.hero-level-tip {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-style: italic;
+}
+
+/* Stats bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 20px 16px;
+}
+
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Continue section */
+.continue-section {
+  margin-bottom: 40px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.see-all {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: gap 0.2s ease;
+}
+
+.see-all:hover {
+  gap: 8px;
+}
+
+.recent-surahs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recent-surah-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--text-primary);
+  padding: 14px 18px;
+}
+
+.surah-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.surah-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.surah-name-ar {
+  font-family: var(--font-arabic);
+  font-size: 1.2rem;
+  direction: rtl;
+}
+
+.surah-name-fr {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.surah-arrow {
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.recent-surah-card:hover .surah-arrow {
+  transform: translateX(4px);
+  color: var(--primary);
+}
+
+/* Features */
+.features-section {
+  margin-bottom: 40px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.feature-card {
+  text-decoration: none;
+  color: var(--text-primary);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-card h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.feature-card p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.feature-link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+/* Recommended */
+.recommended-section {
+  margin-bottom: 40px;
+}
+
+.level-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.recommended-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.rec-card {
+  text-decoration: none;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+}
+
+.rec-num {
+  width: 30px;
+  height: 30px;
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rec-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.rec-arabic {
+  font-family: var(--font-arabic);
+  font-size: 1.1rem;
+  direction: rtl;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rec-french {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rec-verses {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 48px 0 40px;
+  }
+}

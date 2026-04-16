@@ -1,0 +1,80 @@
+import axios from 'axios'
+
+const BASE_URL = 'https://api.alquran.cloud/v1'
+const AUDIO_BASE = 'https://cdn.islamic.network/quran/audio/128/ar.alafasy'
+
+const api = axios.create({ baseURL: BASE_URL })
+
+// Cache
+const cache = new Map()
+
+async function cached(key, fetcher) {
+  if (cache.has(key)) return cache.get(key)
+  const result = await fetcher()
+  cache.set(key, result)
+  return result
+}
+
+export async function getSurahList() {
+  return cached('surah_list', async () => {
+    const { data } = await api.get('/surah')
+    return data.data
+  })
+}
+
+export async function getSurahArabic(number) {
+  return cached(`surah_ar_${number}`, async () => {
+    const { data } = await api.get(`/surah/${number}`)
+    return data.data
+  })
+}
+
+export async function getSurahWithAudio(number) {
+  return cached(`surah_audio_${number}`, async () => {
+    const { data } = await api.get(`/surah/${number}/ar.alafasy`)
+    return data.data
+  })
+}
+
+export async function getSurahTranslation(number) {
+  return cached(`surah_fr_${number}`, async () => {
+    const { data } = await api.get(`/surah/${number}/fr.hamidullah`)
+    return data.data
+  })
+}
+
+export async function getSurahTransliteration(number) {
+  return cached(`surah_trans_${number}`, async () => {
+    const { data } = await api.get(`/surah/${number}/en.transliteration`)
+    return data.data
+  })
+}
+
+export async function getFullSurah(number) {
+  const [arabic, audio, translation, transliteration] = await Promise.all([
+    getSurahArabic(number),
+    getSurahWithAudio(number),
+    getSurahTranslation(number),
+    getSurahTransliteration(number),
+  ])
+
+  return {
+    ...arabic,
+    ayahs: arabic.ayahs.map((ayah, i) => ({
+      ...ayah,
+      audio: audio.ayahs[i]?.audio || `${AUDIO_BASE}/${ayah.number}.mp3`,
+      audioSecondary: audio.ayahs[i]?.audioSecondary || [],
+      translation: translation.ayahs[i]?.text || '',
+      transliteration: transliteration.ayahs[i]?.text || '',
+    })),
+  }
+}
+
+export function getAudioUrl(verseNumber) {
+  return `${AUDIO_BASE}/${verseNumber}.mp3`
+}
+
+export async function searchQuran(query, language = 'fr.hamidullah') {
+  const { data } = await api.get(`/search/${encodeURIComponent(query)}/all/${language}`)
+  return data.data
+}

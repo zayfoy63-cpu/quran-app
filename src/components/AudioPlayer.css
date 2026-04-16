@@ -293,3 +293,47 @@
   border: 2px solid white;
   box-shadow: 0 1px 4px var(--shadow);
 }
+
+/* ── Mobile: compact AudioPlayer inside fixed bottom bar ── */
+@media (max-width: 900px) {
+  .audio-player {
+    padding: 8px 4px 4px;
+  }
+
+  .player-verse-info {
+    margin-bottom: 8px;
+  }
+
+  .player-progress {
+    margin-bottom: 4px;
+  }
+
+  .player-times {
+    margin-bottom: 8px;
+    font-size: 0.7rem;
+  }
+
+  .player-controls {
+    margin-bottom: 8px;
+    gap: 8px;
+  }
+
+  .play-btn {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .player-repeat {
+    margin-bottom: 8px;
+    gap: 6px;
+  }
+
+  .player-bottom {
+    gap: 8px;
+  }
+
+  /* Hide volume slider on mobile to save space */
+  .volume-control {
+    display: none;
+  }
+}

@@ -285,3 +285,51 @@
   text-align: right;
   flex-shrink: 0;
 }
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .pronunciation-checker {
+    padding: 16px;
+  }
+
+  .checker-controls {
+    flex-direction: column;
+  }
+
+  .checker-controls .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mic-btn {
+    padding: 14px 20px;
+    font-size: 1rem;
+  }
+
+  .expected-arabic {
+    font-size: 1.3rem;
+  }
+
+  /* Score ring smaller on mobile */
+  .score-ring-wrap svg {
+    width: 80px;
+    height: 80px;
+  }
+
+  .word-comparison {
+    font-size: 1.2rem;
+    gap: 6px;
+  }
+
+  /* Safari iOS : pas de SpeechRecognition — afficher un message clair */
+  .safari-warning {
+    background: rgba(231, 76, 60, 0.08);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    color: #c0392b;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
+}

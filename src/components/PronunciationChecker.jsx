@@ -92,12 +92,22 @@ export default function PronunciationChecker({ verse, surahNumber }) {
     setShowComparison(false)
   }
 
+  const isSafariIOS = /iP(hone|ad|od)/.test(navigator.userAgent) && /WebKit/.test(navigator.userAgent) && !/(CriOS|FxiOS)/.test(navigator.userAgent)
+
   if (!supported) {
     return (
       <div className="pronunciation-checker unsupported">
         <XCircle size={24} />
-        <p>La reconnaissance vocale n'est pas supportée par votre navigateur.<br />
-          Utilisez Chrome ou Edge pour cette fonctionnalité.</p>
+        <div>
+          <p style={{ fontWeight: 600, marginBottom: 6 }}>
+            Reconnaissance vocale non disponible
+          </p>
+          <p style={{ fontSize: '0.85rem', lineHeight: 1.6 }}>
+            {isSafariIOS
+              ? 'Sur iPhone/iPad, ouvrez cette page dans Chrome (iOS) pour activer le microphone.'
+              : 'Utilisez Chrome ou Edge (bureau ou Android) pour cette fonctionnalité.'}
+          </p>
+        </div>
       </div>
     )
   }

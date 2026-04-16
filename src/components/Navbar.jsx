@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Moon, Sun, Book, BarChart2, Home, Menu, X, Settings } from 'lucide-react'
+import { Moon, Sun, Book, BarChart2, Home, Menu, X, Settings, BookOpen } from 'lucide-react'
 import { useApp } from '../context/AppContext'
 import './Navbar.css'
 
@@ -16,6 +16,7 @@ export default function Navbar() {
   const navLinks = [
     { to: '/', label: 'Accueil', icon: Home },
     { to: '/library', label: 'Bibliothèque', icon: Book },
+    { to: '/tajwid', label: 'Tajwid', icon: BookOpen },
     { to: '/progress', label: 'Progression', icon: BarChart2 },
   ]
 

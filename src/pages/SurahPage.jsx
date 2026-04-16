@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft, Settings, Eye, EyeOff, Palette, Type,
   Mic, Repeat, BookOpen, ChevronDown, ChevronUp, ZoomIn, ZoomOut
@@ -22,6 +22,7 @@ const TABS = [
 
 export default function SurahPage() {
   const { number } = useParams()
+  const [searchParams] = useSearchParams()
   const {
     markSurahListened, showTajwid, setShowTajwid,
     showTransliteration, setShowTransliteration,
@@ -33,7 +34,10 @@ export default function SurahPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [currentVerseIndex, setCurrentVerseIndex] = useState(0)
-  const [activeTab, setActiveTab] = useState('read')
+  const [activeTab, setActiveTab] = useState(() => {
+    const t = searchParams.get('tab')
+    return ['read', 'repeat', 'pronounce'].includes(t) ? t : 'read'
+  })
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [bismiVisible, setBismiVisible] = useState(true)
   const verseRefs = useRef({})

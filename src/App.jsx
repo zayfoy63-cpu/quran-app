@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import LibraryPage from './pages/LibraryPage'
 import SurahPage from './pages/SurahPage'
 import ProgressPage from './pages/ProgressPage'
+import TajwidPage from './pages/TajwidPage'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/library" element={<LibraryPage />} />
             <Route path="/surah/:number" element={<SurahPage />} />
             <Route path="/progress" element={<ProgressPage />} />
+            <Route path="/tajwid" element={<TajwidPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

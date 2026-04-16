@@ -230,3 +230,53 @@
 .stop-btn:hover {
   background: #c0392b;
 }
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .repetition-mode {
+    padding: 16px;
+  }
+
+  .rep-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rep-setting-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .rep-options {
+    gap: 4px;
+  }
+
+  .rep-opt {
+    padding: 4px 10px;
+    font-size: 0.78rem;
+  }
+
+  .verse-selector {
+    max-height: 150px;
+  }
+
+  .verse-sel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .quick-select {
+    gap: 4px;
+  }
+
+  .rep-controls .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.stop-btn:hover {
+  background: #c0392b;
+}

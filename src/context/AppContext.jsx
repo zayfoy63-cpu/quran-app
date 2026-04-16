@@ -34,7 +34,7 @@ export function AppProvider({ children }) {
 
   const [currentSurah, setCurrentSurah] = useState(null)
   const [currentVerseIndex, setCurrentVerseIndex] = useState(0)
-  const [showTajwid, setShowTajwid] = useState(false)
+  const [showTajwid, setShowTajwid] = useState(true)
   const [showTransliteration, setShowTransliteration] = useState(true)
   const [showTranslation, setShowTranslation] = useState(true)
   const [fontSize, setFontSize] = useState(() => {

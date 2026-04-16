@@ -1,89 +1,107 @@
 // Tajwid rules color-coding engine
-// Based on standard Arabic Tajwid rules
 
 export const TAJWID_RULES = {
   ghunna: {
     name: 'Ghunna',
     nameAr: 'غنة',
-    description: 'Nasalisation — son nasal sur Nun ou Mim avec shadda',
+    description: 'Nasalisation — Nun ou Mim avec shadda (ّ)',
     color: '#e74c3c',
     className: 'tajwid-ghunna',
   },
   madd: {
     name: 'Madd',
     nameAr: 'مد',
-    description: 'Prolongation — allongement de la voyelle',
+    description: 'Prolongation — alef ا, waw و, ya ي porteur de voyelle longue',
     color: '#3498db',
     className: 'tajwid-madd',
   },
   idgham: {
     name: 'Idgham',
     nameAr: 'إدغام',
-    description: 'Assimilation — fusion de Nun Sakinah avec certaines lettres',
+    description: 'Assimilation — Nun sakinah/tanwin suivi de ن م و ي ر ل',
     color: '#9b59b6',
     className: 'tajwid-idgham',
   },
   ikhfa: {
     name: 'Ikhfa',
     nameAr: 'إخفاء',
-    description: 'Dissimulation — son de Nun Sakinah partiellement caché',
+    description: 'Dissimulation — Nun sakinah devant ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك',
     color: '#e67e22',
     className: 'tajwid-ikhfa',
   },
   qalqala: {
     name: 'Qalqala',
     nameAr: 'قلقلة',
-    description: 'Écho — vibration sur les lettres ق ط ب ج د avec sukun',
+    description: 'Écho — lettres ق ط ب ج د (toujours actif)',
     color: '#27ae60',
     className: 'tajwid-qalqala',
   },
   iqlab: {
     name: 'Iqlab',
     nameAr: 'إقلاب',
-    description: 'Transformation — Nun Sakinah devient Mim devant Ba',
+    description: 'Transformation — Nun sakinah devient Mim devant ب',
     color: '#f39c12',
     className: 'tajwid-waqf',
   },
   tafkhim: {
     name: 'Tafkhim',
     nameAr: 'تفخيم',
-    description: 'Emphatique — lettres prononcées avec emphase',
+    description: 'Emphatique — lettres خ غ ض ظ ط ق ص',
     color: '#c0392b',
     className: 'tajwid-tafkhim',
   },
-  tarqiq: {
-    name: 'Tarqiq',
-    nameAr: 'ترقيق',
-    description: 'Lettres légères — prononcées sans emphase',
-    color: '#2980b9',
-    className: 'tajwid-tarqiq',
-  },
 }
 
-// Arabic Unicode ranges and special characters
-const QALQALA_LETTERS = /[\u0642\u0637\u0628\u062C\u062F]/u // ق ط ب ج د
-const MADD_CHARS = /[\u0622\u0623\u0625\u0627\u0648\u064A\u0649]/u // ا آ أ إ و ي ى
-const EMPHATIC_LETTERS = /[\u062E\u063A\u0636\u0638\u0637\u0642\u0635]/u // خ غ ض ظ ط ق ص
-const LIGHT_LETTERS = /[\u0641\u062B\u062D\u0630\u0632\u0633\u0634\u0633]/u
+// ── Unicode constants ─────────────────────────────────────────────────────────
+const SHADDA  = '\u0651'
+const SUKUN   = '\u0652'
+const TANWIN_FATH = '\u064B'
+const TANWIN_KASR = '\u064D'
+const TANWIN_DAMM = '\u064C'
 
-const SHADDA = '\u0651'
-const SUKUN = '\u0652'
-const FATHAH = '\u064E'
-const KASRAH = '\u0650'
-const DAMMAH = '\u064F'
-const MADDAH = '\u0653'
-const TATWEEL = '\u0640'
+const NUN = '\u0646'  // ن
+const MIM = '\u0645'  // م
+const BA  = '\u0628'  // ب
 
-const NUN = '\u0646'
-const MIM = '\u0645'
-const BA = '\u0628'
+// Qalqala: ق ط ب ج د  — colored whenever they appear
+const QALQALA_RE = /[\u0642\u0637\u0628\u062C\u062F]/u
 
-// Idgham letters (ن م و ي ر ل)
-const IDGHAM_LETTERS = /[\u0646\u0645\u0648\u064A\u0631\u0644]/u
+// Madd carriers: ا آ أ إ و ي ى  (long vowel letters)
+const MADD_RE = /[\u0622\u0623\u0625\u0627\u0648\u064A\u0649]/u
+
+// Emphatic (tafkhim): خ غ ض ظ ط ق ص
+const TAFKHIM_RE = /[\u062E\u063A\u0636\u0638\u0637\u0642\u0635]/u
+
+// Ikhfa letters (after nun sakinah/tanwin): ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك
+const IKHFA_RE = /[\u062A\u062B\u062C\u062F\u0630\u0632\u0633\u0634\u0635\u0636\u0637\u0638\u0641\u0642\u0643]/u
+
+// Idgham letters (after nun sakinah/tanwin): ن م و ي ر ل
+const IDGHAM_RE = /[\u0646\u0645\u0648\u064A\u0631\u0644]/u
+
+// Diacritics (skip them as standalone chars when assigning rules)
+const DIACRITIC_RE = /[\u064B-\u065F\u0610-\u061A\u06D6-\u06ED]/u
 
 /**
- * Analyze a word/character for tajwid rules.
- * Returns an array of {char, rule} objects.
+ * Returns true if char is a diacritic/haraka (not a base letter)
+ */
+function isDiacritic(c) {
+  return DIACRITIC_RE.test(c)
+}
+
+/**
+ * Check if char at index i is a Nun sakinah OR followed by tanwin
+ */
+function isNunSakinahOrTanwin(chars, i) {
+  const c = chars[i]
+  const next = chars[i + 1] || ''
+  if (c === NUN && (next === SUKUN || next === '' )) return true
+  if ([TANWIN_FATH, TANWIN_KASR, TANWIN_DAMM].includes(next)) return true
+  return false
+}
+
+/**
+ * Analyze Arabic text char by char and return [{char, rule}].
+ * Diacritics are merged onto their base letter (same rule as base letter).
  */
 export function analyzeTajwid(text) {
   if (!text) return []
@@ -92,43 +110,46 @@ export function analyzeTajwid(text) {
 
   for (let i = 0; i < chars.length; i++) {
     const char = chars[i]
-    const next = chars[i + 1] || ''
+    const next  = chars[i + 1] || ''
     const next2 = chars[i + 2] || ''
-    const combined = char + next
+    const next3 = chars[i + 3] || ''
+
+    // Skip standalone diacritics — they'll render attached to the previous glyph
+    if (isDiacritic(char)) {
+      // Attach to previous entry so the diacritic inherits the same color
+      if (result.length > 0) {
+        result[result.length - 1].char += char
+      } else {
+        result.push({ char, rule: null })
+      }
+      continue
+    }
 
     let rule = null
 
-    // Ghunna: Mim or Nun with shadda
+    // 1. Ghunna: ن or م followed immediately by shadda
     if ((char === NUN || char === MIM) && next === SHADDA) {
       rule = 'ghunna'
     }
-    // Qalqala: qalqala letter with sukun
-    else if (QALQALA_LETTERS.test(char) && (next === SUKUN || i === chars.length - 1)) {
+    // 2. Iqlab: ن sakinah / tanwin before ب
+    else if (char === NUN && isNunSakinahOrTanwin(chars, i)) {
+      const following = [next, next2, next3].find(c => c && !isDiacritic(c))
+      if (following === BA) rule = 'iqlab'
+      else if (IDGHAM_RE.test(following)) rule = 'idgham'
+      else if (IKHFA_RE.test(following)) rule = 'ikhfa'
+    }
+    // 3. Qalqala: letters ق ط ب ج د — always highlighted
+    else if (QALQALA_RE.test(char)) {
       rule = 'qalqala'
     }
-    // Madd: vowel letters
-    else if (MADD_CHARS.test(char) && !QALQALA_LETTERS.test(next)) {
+    // 4. Madd: long-vowel carrier letters ا و ي ى آ أ إ
+    else if (MADD_RE.test(char)) {
       rule = 'madd'
     }
-    // Maddah above alef
-    else if (next === MADDAH) {
-      rule = 'madd'
-    }
-    // Iqlab: Nun sakinah before Ba
-    else if (char === NUN && (next === SUKUN || next === '') && next2 === BA) {
-      rule = 'iqlab'
-    }
-    // Idgham: Nun sakinah before idgham letters
-    else if (char === NUN && next === SUKUN && IDGHAM_LETTERS.test(next2)) {
-      rule = 'idgham'
-    }
-    // Tafkhim: emphatic letters
-    else if (EMPHATIC_LETTERS.test(char)) {
+    // 5. Tafkhim: emphatic letters خ غ ض ظ ط ق ص
+    else if (TAFKHIM_RE.test(char)) {
+      // ق and ط are already captured by qalqala above, so this catches خ غ ض ظ ص
       rule = 'tafkhim'
-    }
-    // Tarqiq: light letters
-    else if (LIGHT_LETTERS.test(char)) {
-      rule = 'tarqiq'
     }
 
     result.push({ char, rule })

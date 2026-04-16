@@ -397,9 +397,14 @@
     background: transparent;
   }
 
+  /* Gap between verse cards tighter on mobile */
+  .verses-list {
+    gap: 8px;
+  }
+
   /* Extra bottom padding so content isn't hidden behind the fixed bar */
   .surah-page {
-    padding-bottom: 200px !important;
+    padding-bottom: 160px !important;
   }
 }
 

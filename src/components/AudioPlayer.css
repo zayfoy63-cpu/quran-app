@@ -297,43 +297,105 @@
 /* ── Mobile: compact AudioPlayer inside fixed bottom bar ── */
 @media (max-width: 900px) {
   .audio-player {
-    padding: 8px 4px 4px;
+    padding: 6px 2px 2px;
   }
 
+  /* Verse info row: smaller */
   .player-verse-info {
-    margin-bottom: 8px;
-  }
-
-  .player-progress {
     margin-bottom: 4px;
   }
 
+  .verse-num-badge {
+    width: 24px;
+    height: 24px;
+    font-size: 0.72rem;
+  }
+
+  .verse-count-text {
+    font-size: 0.75rem;
+  }
+
+  /* Progress bar */
+  .player-progress {
+    height: 4px;
+    margin-bottom: 3px;
+  }
+
   .player-times {
-    margin-bottom: 8px;
-    font-size: 0.7rem;
+    margin-bottom: 4px;
+    font-size: 0.65rem;
   }
 
+  /* Controls row */
   .player-controls {
-    margin-bottom: 8px;
-    gap: 8px;
-  }
-
-  .play-btn {
-    width: 44px !important;
-    height: 44px !important;
-  }
-
-  .player-repeat {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     gap: 6px;
   }
 
-  .player-bottom {
-    gap: 8px;
+  .ctrl-btn {
+    padding: 5px;
   }
 
-  /* Hide volume slider on mobile to save space */
+  .play-btn {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
+  /* Repeat row: smaller buttons */
+  .player-repeat {
+    margin-bottom: 5px;
+    gap: 4px;
+    flex-wrap: nowrap;
+  }
+
+  .repeat-label {
+    font-size: 0.7rem;
+  }
+
+  .repeat-opt {
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    border-radius: 12px;
+  }
+
+  /* Bottom row: auto-next toggle + volume inline */
+  .player-bottom {
+    gap: 6px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .auto-next-toggle {
+    font-size: 0.72rem;
+    gap: 5px;
+  }
+
+  .toggle-track {
+    width: 28px;
+    height: 16px;
+  }
+
+  .toggle-thumb {
+    width: 12px;
+    height: 12px;
+  }
+
+  .auto-next-toggle input:checked + .toggle-track .toggle-thumb {
+    transform: translateX(12px);
+  }
+
+  /* Volume: compact but visible */
   .volume-control {
-    display: none;
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .volume-slider {
+    width: 55px;
+  }
+
+  .ctrl-btn.sm {
+    padding: 4px;
   }
 }

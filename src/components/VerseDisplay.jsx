@@ -78,7 +78,7 @@ export default function VerseDisplay({
       {/* Arabic text */}
       <div
         className="verse-arabic"
-        style={{ fontSize: `${fontSize}px` }}
+        style={{ '--user-font-size': `${fontSize}px` }}
         dir="rtl"
       >
         {showTajwid ? (

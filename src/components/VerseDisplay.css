@@ -69,11 +69,13 @@
   align-items: center;
 }
 
-/* Arabic */
+/* Arabic — uses --user-font-size set inline, capped by --arabic-max-size */
 .verse-arabic {
   font-family: var(--font-arabic);
   direction: rtl;
   text-align: right;
+  /* min() lets CSS media queries cap the user's chosen size on small screens */
+  font-size: min(var(--user-font-size, 32px), var(--arabic-max-size, 9999px));
   line-height: 2.2;
   color: var(--text-primary);
   margin-bottom: 16px;
@@ -167,4 +169,61 @@
 @keyframes soundBars {
   0%, 100% { transform: scaleY(1); }
   50% { transform: scaleY(0.4); }
+}
+
+/* ── Mobile: compact verse cards ── */
+@media (max-width: 900px) {
+  /* Cap Arabic font regardless of user preference slider */
+  .verse-arabic { --arabic-max-size: 20px; line-height: 1.9; }
+  .verse-card {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  .verse-header {
+    margin-bottom: 10px;
+  }
+
+  .verse-number-badge {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  /* Smaller "Mémoriser" button on mobile */
+  .verse-actions .btn {
+    padding: 4px 10px;
+    font-size: 0.72rem;
+  }
+
+  .verse-arabic {
+    margin-bottom: 10px;
+    word-spacing: 3px;
+  }
+
+  .verse-transliteration {
+    font-size: 0.78rem;
+    line-height: 1.5;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+
+  .verse-translation p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .translation-label {
+    font-size: 0.68rem;
+    margin-bottom: 3px;
+  }
+
+  .verse-footer {
+    margin-top: 8px;
+    padding-top: 6px;
+  }
+
+  .verse-global-num {
+    font-size: 0.68rem;
+  }
 }

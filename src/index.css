@@ -322,7 +322,7 @@ body {
 /* Responsive */
 @media (max-width: 768px) {
   :root {
-    --font-arabic-size: 1.6rem;
+    --font-arabic-size: 1.3rem;
   }
 
   .container {
@@ -337,6 +337,6 @@ body {
 
 @media (max-width: 480px) {
   :root {
-    --font-arabic-size: 1.4rem;
+    --font-arabic-size: 1.1rem;
   }
 }

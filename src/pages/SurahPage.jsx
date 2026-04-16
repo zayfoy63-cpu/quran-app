@@ -6,7 +6,6 @@ import {
 } from 'lucide-react'
 import { getFullSurah } from '../services/quranApi'
 import { useApp } from '../context/AppContext'
-import { getActiveTajwidRules } from '../utils/tajwid'
 import AudioPlayer from '../components/AudioPlayer'
 import VerseDisplay from '../components/VerseDisplay'
 import TajwidLegend from '../components/TajwidLegend'
@@ -95,7 +94,6 @@ export default function SurahPage() {
   }, [])
 
   const currentVerse = surah?.ayahs?.[currentVerseIndex]
-  const activeRules  = currentVerse ? getActiveTajwidRules(currentVerse.text) : []
 
   return (
     <div className="page surah-page">
@@ -202,7 +200,7 @@ export default function SurahPage() {
 
               {showTajwid && activeTab === 'read' && (
                 <div className="mb-16">
-                  <TajwidLegend activeRules={activeRules} />
+                  <TajwidLegend />
                 </div>
               )}
 
@@ -219,6 +217,7 @@ export default function SurahPage() {
                         showTransliteration={showTransliteration}
                         showTranslation={showTranslation}
                         fontSize={fontSize}
+                        tajweedText={verse.tajweedText}
                       />
                     </div>
                   ))}

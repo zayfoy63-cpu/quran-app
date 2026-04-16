@@ -1,29 +1,8 @@
 import React, { useState } from 'react'
 import { CheckCircle, BookOpen, Star } from 'lucide-react'
 import { useApp } from '../context/AppContext'
-import { analyzeTajwid, TAJWID_RULES } from '../utils/tajwid'
+import TajwidText from './TajwidText'
 import './VerseDisplay.css'
-
-function TajwidText({ text }) {
-  const parts = analyzeTajwid(text)
-  return (
-    <span>
-      {parts.map((p, i) => (
-        p.rule ? (
-          <span
-            key={i}
-            className={TAJWID_RULES[p.rule]?.className}
-            title={`${TAJWID_RULES[p.rule]?.name} — ${TAJWID_RULES[p.rule]?.description}`}
-          >
-            {p.char}
-          </span>
-        ) : (
-          <span key={i}>{p.char}</span>
-        )
-      ))}
-    </span>
-  )
-}
 
 export default function VerseDisplay({
   verse,
@@ -34,6 +13,7 @@ export default function VerseDisplay({
   showTransliteration,
   showTranslation,
   fontSize = 32,
+  tajweedText,
 }) {
   const { isVerseMemorized, markVerseMemorized, level } = useApp()
   const [expanded, setExpanded] = useState(false)
@@ -82,7 +62,7 @@ export default function VerseDisplay({
         dir="rtl"
       >
         {showTajwid ? (
-          <TajwidText text={verse.text} />
+          <TajwidText html={tajweedText} plainText={verse.text} />
         ) : (
           verse.text
         )}

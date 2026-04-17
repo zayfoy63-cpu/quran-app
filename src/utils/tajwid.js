@@ -1,69 +1,68 @@
 /**
  * Tajwid color definitions — Hafs an Asim (narration standard)
- * Colors match the internationally published colored Tajweed Quran
- * (Dar Al-Ma'rifah, Beirut / King Fahd Complex, Madinah).
- *
- * Source tags come from the quran.com API v4 uthmani_tajweed endpoint.
+ * Source tags come from alquran.cloud edition "quran-tajweed".
+ * Both the short class names (madd, qalqala…) and the long variants
+ * (madda_normal, qalqalah…) are mapped so the parser handles either API.
  */
 
-// ── Official color palette ────────────────────────────────────────────────────
+// ── Official color palette (mushaf Hafs, alquran.cloud standard) ─────────────
 
 export const TAJWEED_COLORS = {
-  // ── MADD (مد) — RED ──────────────────────────────────────────────────────
-  // All prolongation types are red in the standard colored mushaf
-  madda_normal:       { color: '#D32F2F', label: 'Madd Normal (2)',        nameAr: 'مد طبيعي',       group: 'madd' },
-  madda_permissible:  { color: '#D32F2F', label: 'Madd Permissible (2/4/6)', nameAr: 'مد جائز',      group: 'madd' },
-  madd_muttasil:      { color: '#D32F2F', label: 'Madd Muttasil (4-5)',    nameAr: 'مد متصل واجب',   group: 'madd' },
-  madd_munfasil:      { color: '#D32F2F', label: 'Madd Munfasil (4-5)',    nameAr: 'مد منفصل جائز',  group: 'madd' },
-  madd_6:             { color: '#D32F2F', label: 'Madd Laazim (6)',        nameAr: 'مد لازم',        group: 'madd' },
-  madd_246:           { color: '#D32F2F', label: "Madd 'Aarid / Leen",    nameAr: 'مد عارض / لين',  group: 'madd' },
+  // ── MADD (مد) — RED #C0392B ──────────────────────────────────────────────
+  madd:               { color: '#C0392B', label: 'Madd — Prolongation',        nameAr: 'مد',             group: 'madd' },
+  madda_normal:       { color: '#C0392B', label: 'Madd Normal (2)',             nameAr: 'مد طبيعي',       group: 'madd' },
+  madda_permissible:  { color: '#C0392B', label: 'Madd Permissible (2/4/6)',    nameAr: 'مد جائز',        group: 'madd' },
+  madd_muttasil:      { color: '#C0392B', label: 'Madd Muttasil (4-5)',         nameAr: 'مد متصل واجب',   group: 'madd' },
+  madd_munfasil:      { color: '#C0392B', label: 'Madd Munfasil (4-5)',         nameAr: 'مد منفصل جائز',  group: 'madd' },
+  madd_6:             { color: '#C0392B', label: 'Madd Laazim (6)',             nameAr: 'مد لازم',        group: 'madd' },
+  madd_246:           { color: '#C0392B', label: "Madd 'Aarid / Leen",         nameAr: 'مد عارض / لين',  group: 'madd' },
 
-  // ── GHUNNA (غنة) — BLUE ──────────────────────────────────────────────────
-  // Nun / Meem mushaddad — 2 harakat of nasalisation
-  ghunnah:            { color: '#1565C0', label: 'Ghunna (2 harakat)',     nameAr: 'غنة',            group: 'ghunna' },
+  // ── QALQALA (قلقلة) — DARK BLUE #1A5276 ─────────────────────────────────
+  qalqala:            { color: '#1A5276', label: 'Qalqala (ق ط ب ج د)',        nameAr: 'قلقلة',          group: 'qalqala' },
+  qalqalah:           { color: '#1A5276', label: 'Qalqala (ق ط ب ج د)',        nameAr: 'قلقلة',          group: 'qalqala' },
 
-  // ── IDGHAM AVEC GHUNNA (إدغام بغنة) — GREEN ─────────────────────────────
-  idghaam_ghunnah:    { color: '#2E7D32', label: 'Idgham avec Ghunna',     nameAr: 'إدغام بغنة',     group: 'idgham_g' },
-  idghaam_shafawi:    { color: '#2E7D32', label: 'Idgham Shafawi (مـ)',    nameAr: 'إدغام شفوي',     group: 'idgham_g' },
+  // ── GHUNNA (غنة) — GREEN #1E8449 ────────────────────────────────────────
+  ghunna:             { color: '#1E8449', label: 'Ghunna (2 harakat)',          nameAr: 'غنة',            group: 'ghunna' },
+  ghunnah:            { color: '#1E8449', label: 'Ghunna (2 harakat)',          nameAr: 'غنة',            group: 'ghunna' },
 
-  // ── IDGHAM SANS GHUNNA (إدغام بلا غنة) — DARK BLUE ───────────────────────
-  idghaam_no_ghunnah: { color: '#1A237E', label: 'Idgham sans Ghunna',     nameAr: 'إدغام بلا غنة',  group: 'idgham_ng' },
-  idghaam_mutajaanisain: { color: '#1A237E', label: 'Idgham Mutajanisain', nameAr: 'إدغام متجانسين', group: 'idgham_ng' },
-  idghaam_mutaqaaribain: { color: '#1A237E', label: 'Idgham Mutaqaribain', nameAr: 'إدغام متقاربين', group: 'idgham_ng' },
+  // ── IKHFA (إخفاء) — ORANGE #D35400 ─────────────────────────────────────
+  ikhfa:              { color: '#D35400', label: 'Ikhfa Haqiqi',               nameAr: 'إخفاء حقيقي',    group: 'ikhfa' },
+  ikhfa_shafawi:      { color: '#D35400', label: 'Ikhfa Shafawi (مـ)',          nameAr: 'إخفاء شفوي',     group: 'ikhfa' },
 
-  // ── IKHFA (إخفاء) — TEAL ─────────────────────────────────────────────────
-  ikhfa:              { color: '#00695C', label: 'Ikhfa Haqiqi',           nameAr: 'إخفاء حقيقي',    group: 'ikhfa' },
-  ikhfa_shafawi:      { color: '#00695C', label: 'Ikhfa Shafawi (مـ)',     nameAr: 'إخفاء شفوي',    group: 'ikhfa' },
+  // ── IDGHAM (إدغام) — LIGHT BLUE #2E86C1 ─────────────────────────────────
+  idgham:             { color: '#2E86C1', label: 'Idgham',                     nameAr: 'إدغام',           group: 'idgham' },
+  idgham_ghunna:      { color: '#2E86C1', label: 'Idgham avec Ghunna',         nameAr: 'إدغام بغنة',      group: 'idgham' },
+  idghaam_ghunnah:    { color: '#2E86C1', label: 'Idgham avec Ghunna',         nameAr: 'إدغام بغنة',      group: 'idgham' },
+  idghaam_shafawi:    { color: '#2E86C1', label: 'Idgham Shafawi',             nameAr: 'إدغام شفوي',      group: 'idgham' },
+  idghaam_no_ghunnah: { color: '#2E86C1', label: 'Idgham sans Ghunna',         nameAr: 'إدغام بلا غنة',   group: 'idgham' },
+  idghaam_mutajaanisain: { color: '#2E86C1', label: 'Idgham Mutajanisain',     nameAr: 'إدغام متجانسين',  group: 'idgham' },
+  idghaam_mutaqaaribain: { color: '#2E86C1', label: 'Idgham Mutaqaribain',     nameAr: 'إدغام متقاربين',  group: 'idgham' },
 
-  // ── IQLAB (إقلاب) — ORANGE ───────────────────────────────────────────────
-  iqlab:              { color: '#E65100', label: 'Iqlab (نـ → مـ)',        nameAr: 'إقلاب',          group: 'iqlab' },
+  // ── IQLAB (إقلاب) — PURPLE #7D3C98 ─────────────────────────────────────
+  iqlab:              { color: '#7D3C98', label: 'Iqlab (نـ → مـ)',            nameAr: 'إقلاب',           group: 'iqlab' },
 
-  // ── QALQALA (قلقلة) — CYAN ───────────────────────────────────────────────
-  qalqalah:           { color: '#00838F', label: 'Qalqala (ق ط ب ج د)',   nameAr: 'قلقلة',          group: 'qalqala' },
-
-  // ── STRUCTURAL — GRAY (Hamzat al-Wasl, Lam Shamsiyya) ───────────────────
-  // These are formatting helpers; colored gray so they don't distract
-  ham_wasl:           { color: '#9E9E9E', label: 'Hamzat al-Wasl',         nameAr: 'همزة الوصل',     group: 'wasl' },
-  hamzat_wasl:        { color: '#9E9E9E', label: 'Hamzat al-Wasl',         nameAr: 'همزة الوصل',     group: 'wasl' },
-  laam_shamsiyah:     { color: '#9E9E9E', label: 'Lam Shamsiyya',          nameAr: 'لام شمسية',      group: 'wasl' },
-  lam_shamsiyyah:     { color: '#9E9E9E', label: 'Lam Shamsiyya',          nameAr: 'لام شمسية',      group: 'wasl' },
+  // ── HAM_WASL / LAM SHAMSIYYA — GRAY #888888 ─────────────────────────────
+  ham_wasl:           { color: '#888888', label: 'Hamzat al-Wasl',             nameAr: 'همزة الوصل',      group: 'wasl' },
+  hamzat_wasl:        { color: '#888888', label: 'Hamzat al-Wasl',             nameAr: 'همزة الوصل',      group: 'wasl' },
+  lam_shamsiyah:      { color: '#888888', label: 'Lam Shamsiyya',              nameAr: 'لام شمسية',       group: 'wasl' },
+  lam_shamsiyyah:     { color: '#888888', label: 'Lam Shamsiyya',              nameAr: 'لام شمسية',       group: 'wasl' },
+  laam_shamsiyah:     { color: '#888888', label: 'Lam Shamsiyya',              nameAr: 'لام شمسية',       group: 'wasl' },
 
   // ── SILENT — LIGHT GRAY ──────────────────────────────────────────────────
-  silent:             { color: '#BDBDBD', label: 'Lettre muette',          nameAr: 'حرف صامت',       group: 'silent' },
+  silent:             { color: '#BDBDBD', label: 'Lettre muette',              nameAr: 'حرف صامت',        group: 'silent' },
 }
 
 /**
- * Groups used for the legend (one row per group, not one per tag).
+ * Groups shown in the legend (one row per group).
  */
 export const TAJWEED_LEGEND = [
-  { group: 'madd',      color: '#D32F2F', label: 'Madd — Prolongation',          nameAr: 'مد',       desc: 'Toutes les variantes de prolongation (Normal, Muttasil, Munfasil, Laazim…)' },
-  { group: 'ghunna',    color: '#1565C0', label: 'Ghunna — Nasalisation',         nameAr: 'غنة',      desc: 'Nun ou Mim mushaddad : son nasal de 2 harakat' },
-  { group: 'idgham_g',  color: '#2E7D32', label: 'Idgham avec Ghunna',            nameAr: 'إدغام بغنة', desc: 'Assimilation avec nasalisation : ن/ت devant ي ن م و' },
-  { group: 'idgham_ng', color: '#1A237E', label: 'Idgham sans Ghunna',            nameAr: 'إدغام بلا غنة', desc: 'Assimilation sans nasalisation : ن devant ر ل' },
-  { group: 'ikhfa',     color: '#00695C', label: 'Ikhfa — Dissimulation',         nameAr: 'إخفاء',    desc: 'Son de Nun/Tanwin partiellement dissimulé devant 15 lettres' },
-  { group: 'iqlab',     color: '#E65100', label: 'Iqlab — Substitution',          nameAr: 'إقلاب',    desc: 'Nun sakinah / Tanwin se transforme en Mim devant ب' },
-  { group: 'qalqala',   color: '#00838F', label: 'Qalqala — Écho',                nameAr: 'قلقلة',    desc: 'Son rebondissant sur ق ط ب ج د avec sukun' },
-  { group: 'wasl',      color: '#9E9E9E', label: 'Hamzat al-Wasl / Lam Shamsiyya', nameAr: 'همزة الوصل / لام شمسية', desc: 'Marqueurs de liaison et d\'assimilation structurels' },
+  { group: 'madd',    color: '#C0392B', label: 'Madd — Prolongation',      nameAr: 'مد',          desc: 'Toutes les variantes de prolongation (Normal, Muttasil, Munfasil, Laazim…)' },
+  { group: 'qalqala', color: '#1A5276', label: 'Qalqala — Écho',           nameAr: 'قلقلة',       desc: 'Son rebondissant sur ق ط ب ج د avec sukun' },
+  { group: 'ghunna',  color: '#1E8449', label: 'Ghunna — Nasalisation',    nameAr: 'غنة',         desc: 'Nun ou Mim mushaddad : son nasal de 2 harakat' },
+  { group: 'ikhfa',   color: '#D35400', label: 'Ikhfa — Dissimulation',    nameAr: 'إخفاء',       desc: 'Son de Nun/Tanwin partiellement dissimulé devant 15 lettres' },
+  { group: 'idgham',  color: '#2E86C1', label: 'Idgham — Assimilation',    nameAr: 'إدغام',       desc: 'Assimilation avec ou sans ghunna (ن / م devant ي ن م و ر ل)' },
+  { group: 'iqlab',   color: '#7D3C98', label: 'Iqlab — Substitution',     nameAr: 'إقلاب',       desc: 'Nun sakinah / Tanwin se transforme en Mim devant ب' },
+  { group: 'wasl',    color: '#888888', label: 'Hamzat al-Wasl / Lam ش',   nameAr: 'همزة الوصل',  desc: "Marqueurs de liaison et d'assimilation structurels" },
 ]
 
 /**
@@ -73,32 +72,29 @@ export const TAJWEED_LEGEND = [
 export function parseTajweedHtml(html) {
   if (!html) return []
   const segments = []
-  // Matches both quoted and unquoted class attributes
   const RE = /<tajweed class=["']?([^"'\s>]+)["']?>([\s\S]*?)<\/tajweed>|([^<]+)/g
   let m
   while ((m = RE.exec(html)) !== null) {
     if (m[1] !== undefined) {
-      // Tagged segment
       segments.push({ text: m[2], rule: m[1] })
     } else if (m[3] !== undefined) {
-      // Plain text
       segments.push({ text: m[3], rule: null })
     }
   }
   return segments
 }
 
-// ── Legacy helpers (kept for backward compat with TajwidPage fallback) ────────
+// ── Legacy helpers (kept for backward compat with TajwidPage) ─────────────────
 
 export const TAJWID_RULES = {
-  madd:    { name: 'Madd',    nameAr: 'مد',      description: 'Prolongation',          color: '#D32F2F', className: 'tajwid-madd'    },
-  ghunna:  { name: 'Ghunna',  nameAr: 'غنة',     description: 'Nasalisation',          color: '#1565C0', className: 'tajwid-ghunna'  },
-  idgham:  { name: 'Idgham',  nameAr: 'إدغام',   description: 'Assimilation',          color: '#2E7D32', className: 'tajwid-idgham'  },
-  ikhfa:   { name: 'Ikhfa',   nameAr: 'إخفاء',   description: 'Dissimulation',         color: '#00695C', className: 'tajwid-ikhfa'   },
-  qalqala: { name: 'Qalqala', nameAr: 'قلقلة',   description: 'Écho — ق ط ب ج د',      color: '#00838F', className: 'tajwid-qalqala' },
-  iqlab:   { name: 'Iqlab',   nameAr: 'إقلاب',   description: 'Substitution نـ → مـ',  color: '#E65100', className: 'tajwid-waqf'    },
-  tafkhim: { name: 'Tafkhim', nameAr: 'تفخيم',   description: 'Emphatique',            color: '#C62828', className: 'tajwid-tafkhim' },
+  madd:    { name: 'Madd',    nameAr: 'مد',      description: 'Prolongation',         color: '#C0392B', className: 'tajwid-madd'    },
+  ghunna:  { name: 'Ghunna',  nameAr: 'غنة',     description: 'Nasalisation',         color: '#1E8449', className: 'tajwid-ghunna'  },
+  idgham:  { name: 'Idgham',  nameAr: 'إدغام',   description: 'Assimilation',         color: '#2E86C1', className: 'tajwid-idgham'  },
+  ikhfa:   { name: 'Ikhfa',   nameAr: 'إخفاء',   description: 'Dissimulation',        color: '#D35400', className: 'tajwid-ikhfa'   },
+  qalqala: { name: 'Qalqala', nameAr: 'قلقلة',   description: 'Écho — ق ط ب ج د',     color: '#1A5276', className: 'tajwid-qalqala' },
+  iqlab:   { name: 'Iqlab',   nameAr: 'إقلاب',   description: 'Substitution نـ → مـ', color: '#7D3C98', className: 'tajwid-iqlab'   },
+  tafkhim: { name: 'Tafkhim', nameAr: 'تفخيم',   description: 'Emphatique',           color: '#C0392B', className: 'tajwid-tafkhim' },
 }
 
-export function analyzeTajwid(text) { return [] }      // replaced by API-based parsing
-export function getActiveTajwidRules() { return [] }   // replaced by TAJWEED_LEGEND
+export function analyzeTajwid(text) { return [] }
+export function getActiveTajwidRules() { return [] }

@@ -198,12 +198,6 @@ export default function SurahPage() {
             {/* Verses column (left / top on mobile) */}
             <div className="surah-verses-col" ref={contentRef}>
 
-              {showTajwid && activeTab === 'read' && (
-                <div className="mb-16">
-                  <TajwidLegend />
-                </div>
-              )}
-
               {activeTab === 'read' && (
                 <div className="verses-list">
                   {surah.ayahs.map((verse, i) => (
@@ -221,6 +215,12 @@ export default function SurahPage() {
                       />
                     </div>
                   ))}
+                </div>
+              )}
+
+              {showTajwid && activeTab === 'read' && (
+                <div className="mt-16">
+                  <TajwidLegend />
                 </div>
               )}
 

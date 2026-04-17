@@ -52,22 +52,17 @@ export async function getSurahTransliteration(number) {
 }
 
 /**
- * Fetch tajweed-marked Uthmani text from quran.com API v4.
+ * Fetch tajweed-marked text from alquran.cloud edition "quran-tajweed".
  * Returns a map: verseNumber → tajweedHtml string
  * Tags format: <tajweed class=rule_name>text</tajweed>
  */
 export async function getTajweedVerses(surahNumber) {
   return cached(`tajweed_${surahNumber}`, async () => {
     try {
-      const { data } = await quranCom.get(
-        `/quran/verses/uthmani_tajweed`,
-        { params: { chapter_number: surahNumber } }
-      )
+      const { data } = await api.get(`/surah/${surahNumber}/quran-tajweed`)
       const map = {}
-      for (const v of data.verses || []) {
-        // verse_key is "surah:verse", e.g. "1:1"
-        const verseNum = parseInt(v.verse_key.split(':')[1])
-        map[verseNum] = v.text_uthmani_tajweed || ''
+      for (const ayah of data.data?.ayahs || []) {
+        map[ayah.numberInSurah] = ayah.text || ''
       }
       return map
     } catch {

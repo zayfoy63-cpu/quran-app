@@ -1,15 +1,16 @@
 import { TAJWEED_COLORS, TAJWEED_LETTER_CODES } from '../utils/tajwid'
 
 /**
- * Parse tajweed-encoded text and return an HTML string with colored <span>s.
+ * Real alquran.cloud quran-tajweed format (verified from API):
  *
- * Supported formats:
- *   alquran.cloud bracket format : [x:XXXX[chars  (closing delimiter is next [)
- *   alquran.cloud bracket format : [x:XXXX]chars  (closing delimiter is ])
- *   quran.com HTML format        : <tajweed class="rule">chars</tajweed>
+ *   بِسْمِ [h:1[ٱ]للَّهِ [h:2[ٱ][l[لِ]الرَّحْمَ[n[ـَ]نِ
  *
- * The split regex uses a character class [\]\[] to accept either ] or [ as
- * the closing character of the marker header, making it format-agnostic.
+ * Structure: [code:optionalId[colored_chars]normal_text...
+ *   - The colored letters are ONLY those between the second [ and the closing ]
+ *   - Everything outside these markers is normal text (no color applied)
+ *
+ * Parser: single .replace() — matches [code:id[chars] and wraps only `chars`
+ * in a colored span. All other text passes through unchanged.
  */
 function buildStyledHtml(text) {
   if (!text) return ''
@@ -26,28 +27,15 @@ function buildStyledHtml(text) {
     )
   }
 
-  // alquran.cloud bracket format — split on [code:id] or [code:id[ markers
-  // Capture group inside split includes the letter code in the token array.
-  // Result pattern: [prefix, code, text, code, text, ...]
-  const tokens = text.split(/\[([a-z])(?::\d+)?[\]\[]/)
-
-  let html = tokens[0] // plain text before the first marker (may be empty)
-
-  for (let i = 1; i < tokens.length - 1; i += 2) {
-    const code  = tokens[i]
-    const chars = tokens[i + 1] ?? ''
-    const def   = TAJWEED_LETTER_CODES[code]
-    if (def?.color && chars) {
-      html += `<span style="color:${def.color}" title="${def.label} — ${def.nameAr}">${chars}</span>`
-    } else {
-      html += chars
+  // alquran.cloud bracket format — only the chars inside [code[...]]] are colored
+  return text.replace(
+    /\[([a-z])(?::\d+)?\[([^\]]*)\]/g,
+    (_, code, chars) => {
+      const def = TAJWEED_LETTER_CODES[code]
+      if (!def?.color) return chars  // structural codes with null color render plain
+      return `<span style="color:${def.color}" title="${def.label} — ${def.nameAr}">${chars}</span>`
     }
-  }
-
-  // If token count is even (shouldn't normally happen), append trailing token
-  if (tokens.length % 2 === 0) html += tokens[tokens.length - 1]
-
-  return html
+  )
 }
 
 export default function TajwidText({ html, plainText }) {

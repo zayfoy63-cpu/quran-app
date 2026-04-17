@@ -1,18 +1,20 @@
 import { TAJWEED_COLORS, TAJWEED_LETTER_CODES } from '../utils/tajwid'
 
 /**
- * Detect and parse either format from alquran.cloud:
+ * Parse tajweed-encoded text and return an HTML string with colored <span>s.
  *
- * New format (quran-tajweed edition): [code:id]chars  e.g. [f:10623]ت[h:10624]و
- *   — split on bracket markers, apply color to following chars per code.
+ * Supported formats:
+ *   alquran.cloud bracket format : [x:XXXX[chars  (closing delimiter is next [)
+ *   alquran.cloud bracket format : [x:XXXX]chars  (closing delimiter is ])
+ *   quran.com HTML format        : <tajweed class="rule">chars</tajweed>
  *
- * Old format (quran.com API): <tajweed class="rule">chars</tajweed>
- *   — regex-replace with inline-colored <span>.
+ * The split regex uses a character class [\]\[] to accept either ] or [ as
+ * the closing character of the marker header, making it format-agnostic.
  */
 function buildStyledHtml(text) {
   if (!text) return ''
 
-  // Old HTML format from quran.com — replace <tajweed> tags with colored spans
+  // Legacy HTML format (quran.com API)
   if (text.includes('<tajweed')) {
     return text.replace(
       /<tajweed class=["']?([^"'\s>]+)["']?>([\s\S]*?)<\/tajweed>/g,
@@ -24,28 +26,26 @@ function buildStyledHtml(text) {
     )
   }
 
-  // New bracket format from alquran.cloud quran-tajweed edition
-  // Split on markers like [f:10623] or [l] — captured groups interleave with text chunks
-  const tokens = text.split(/(\[[a-zA-Z](?::\d+)?\])/)
-  let html = ''
-  let pendingCode = null
+  // alquran.cloud bracket format — split on [code:id] or [code:id[ markers
+  // Capture group inside split includes the letter code in the token array.
+  // Result pattern: [prefix, code, text, code, text, ...]
+  const tokens = text.split(/\[([a-z])(?::\d+)?[\]\[]/)
 
-  for (const token of tokens) {
-    const m = token.match(/^\[([a-zA-Z])(?::\d+)?\]$/)
-    if (m) {
-      pendingCode = m[1]
-    } else if (pendingCode !== null) {
-      const def = TAJWEED_LETTER_CODES[pendingCode]
-      if (def?.color && token) {
-        html += `<span style="color:${def.color}" title="${def.label} — ${def.nameAr}">${token}</span>`
-      } else {
-        html += token
-      }
-      pendingCode = null
+  let html = tokens[0] // plain text before the first marker (may be empty)
+
+  for (let i = 1; i < tokens.length - 1; i += 2) {
+    const code  = tokens[i]
+    const chars = tokens[i + 1] ?? ''
+    const def   = TAJWEED_LETTER_CODES[code]
+    if (def?.color && chars) {
+      html += `<span style="color:${def.color}" title="${def.label} — ${def.nameAr}">${chars}</span>`
     } else {
-      html += token
+      html += chars
     }
   }
+
+  // If token count is even (shouldn't normally happen), append trailing token
+  if (tokens.length % 2 === 0) html += tokens[tokens.length - 1]
 
   return html
 }

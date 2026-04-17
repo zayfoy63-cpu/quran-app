@@ -78,6 +78,22 @@
   text-align: center;
 }
 
+/* ── Reciter select ───────────────────────────────────────────────────────── */
+.reciter-select {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text-primary);
+  cursor: pointer;
+}
+.reciter-select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
 /* ── Toggle switch ────────────────────────────────────────────────────────── */
 .toggle-switch { cursor: pointer; }
 .toggle-switch input { display: none; }

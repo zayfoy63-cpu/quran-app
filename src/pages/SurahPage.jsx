@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useParams, Link, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft, Settings, Palette, Type,
-  Mic, Repeat, BookOpen, ZoomIn, ZoomOut, Eye
+  Mic, Repeat, BookOpen, ZoomIn, ZoomOut, Eye, Music
 } from 'lucide-react'
 import { getFullSurah } from '../services/quranApi'
 import { useApp } from '../context/AppContext'
@@ -17,6 +17,12 @@ const TABS = [
   { key: 'read',      label: 'Lecture',       icon: BookOpen },
   { key: 'repeat',    label: 'Répétition',     icon: Repeat   },
   { key: 'pronounce', label: 'Prononciation',  icon: Mic      },
+]
+
+const AUDIO_CDN = 'https://cdn.islamic.network/quran/audio/128'
+const RECITERS = [
+  { id: 'ar.alafasy', name: 'Mishary Alafasy' },
+  { id: 'ar.husary',  name: 'Mahmoud Al-Hussary' },
 ]
 
 export default function SurahPage() {
@@ -38,6 +44,7 @@ export default function SurahPage() {
     return ['read', 'repeat', 'pronounce'].includes(t) ? t : 'read'
   })
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [reciter,      setReciter]      = useState('ar.alafasy')
 
   const verseRefs    = useRef({})
   const contentRef   = useRef(null)   // ref to surah-verses-col
@@ -93,7 +100,13 @@ export default function SurahPage() {
     // No scrollIntoView here — prevents the "page change" effect on mobile
   }, [])
 
-  const currentVerse = surah?.ayahs?.[currentVerseIndex]
+  // Recompute audio URLs when reciter changes (verse.number is the global verse number)
+  const ayahsWithAudio = surah?.ayahs.map(v => ({
+    ...v,
+    audio: `${AUDIO_CDN}/${reciter}/${v.number}.mp3`,
+  }))
+
+  const currentVerse = ayahsWithAudio?.[currentVerseIndex]
 
   return (
     <div className="page surah-page">
@@ -150,6 +163,18 @@ export default function SurahPage() {
               <span className="settings-label"><Palette size={14} /> Couleurs Tajwid</span>
               <ToggleSwitch value={showTajwid} onChange={setShowTajwid} />
             </div>
+            <div className="settings-row">
+              <span className="settings-label"><Music size={14} /> Récitateur</span>
+              <select
+                className="reciter-select"
+                value={reciter}
+                onChange={e => setReciter(e.target.value)}
+              >
+                {RECITERS.map(r => (
+                  <option key={r.id} value={r.id}>{r.name}</option>
+                ))}
+              </select>
+            </div>
           </div>
         )}
 
@@ -200,7 +225,7 @@ export default function SurahPage() {
 
               {activeTab === 'read' && (
                 <div className="verses-list">
-                  {surah.ayahs.map((verse, i) => (
+                  {ayahsWithAudio.map((verse, i) => (
                     <div key={verse.number} ref={el => (verseRefs.current[i] = el)}>
                       <VerseDisplay
                         verse={verse}
@@ -225,7 +250,7 @@ export default function SurahPage() {
               )}
 
               {activeTab === 'repeat' && (
-                <RepetitionMode verses={surah.ayahs} surahNumber={surah.number} />
+                <RepetitionMode verses={ayahsWithAudio} surahNumber={surah.number} />
               )}
 
               {activeTab === 'pronounce' && (
@@ -238,7 +263,7 @@ export default function SurahPage() {
               <div className="sticky-player">
 
                 <AudioPlayer
-                  verses={surah.ayahs}
+                  verses={ayahsWithAudio}
                   currentIndex={currentVerseIndex}
                   onVerseChange={handleVerseChange}
                   autoPlay={false}
@@ -278,7 +303,7 @@ export default function SurahPage() {
                       value={currentVerseIndex + 1}
                       onChange={e => {
                         const v = parseInt(e.target.value) - 1
-                        if (v >= 0 && v < surah.ayahs.length) setCurrentVerseIndex(v)
+                        if (v >= 0 && v < ayahsWithAudio.length) setCurrentVerseIndex(v)
                       }}
                     />
                     <span className="jump-total">/ {surah.numberOfAyahs}</span>

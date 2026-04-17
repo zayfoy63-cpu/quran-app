@@ -13,7 +13,8 @@ export default function TajwidLegend() {
         onClick={() => setExpanded(!expanded)}
       >
         <Info size={14} />
-        <span>Règles de Tajwid (couleurs Hafs)</span>
+        <span>Légende Tajwid — couleurs officielles alquran.cloud</span>
+        <span className="rules-count">{TAJWEED_LEGEND.length} règles</span>
         {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
       </button>
 

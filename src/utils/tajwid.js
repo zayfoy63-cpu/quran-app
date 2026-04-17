@@ -66,6 +66,22 @@ export const TAJWEED_LEGEND = [
 ]
 
 /**
+ * Single-letter codes used by alquran.cloud "quran-tajweed" edition.
+ * Format in API response: [code:id]chars  or  [code]chars
+ * Each marker applies to the characters that follow it until the next marker.
+ */
+export const TAJWEED_LETTER_CODES = {
+  h: { color: '#888888', label: 'Hamzat al-Wasl', nameAr: 'همزة الوصل' },
+  l: { color: null,      label: 'Lam Shamsiyya',  nameAr: 'لام شمسية'  },
+  n: { color: '#1E8449', label: 'Ghunna',         nameAr: 'غنة'        },
+  f: { color: '#C0392B', label: 'Madd',           nameAr: 'مد'         },
+  p: { color: '#1A5276', label: 'Qalqala',        nameAr: 'قلقلة'      },
+  u: { color: '#2E86C1', label: 'Idgham',         nameAr: 'إدغام'      },
+  e: { color: '#D35400', label: 'Ikhfa',          nameAr: 'إخفاء'      },
+  q: { color: '#7D3C98', label: 'Iqlab',          nameAr: 'إقلاب'      },
+}
+
+/**
  * Parse <tajweed class=RULE>TEXT</tajweed> HTML string into segments.
  * Returns: Array<{ text: string, rule: string|null }>
  */

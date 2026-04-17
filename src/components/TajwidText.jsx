@@ -1,29 +1,23 @@
-import React from 'react'
-import { parseTajweedHtml, TAJWEED_COLORS } from '../utils/tajwid'
+import { TAJWEED_COLORS } from '../utils/tajwid'
+
+/**
+ * Replace <tajweed class=rule>text</tajweed> with inline-colored <span>,
+ * then render via dangerouslySetInnerHTML so all remaining HTML tags
+ * (verse-end markers, <span class=end>, etc.) also render correctly.
+ */
+function buildStyledHtml(html) {
+  return html.replace(
+    /<tajweed class=["']?([^"'\s>]+)["']?>([\s\S]*?)<\/tajweed>/g,
+    (_, rule, text) => {
+      const def = TAJWEED_COLORS[rule]
+      if (!def) return text
+      const title = `${def.label} — ${def.nameAr}`
+      return `<span style="color:${def.color}" title="${title}">${text}</span>`
+    }
+  )
+}
 
 export default function TajwidText({ html, plainText }) {
   if (!html) return <span>{plainText}</span>
-
-  const segments = parseTajweedHtml(html)
-  if (!segments.length) return <span>{plainText}</span>
-
-  return (
-    <span>
-      {segments.map((seg, i) => {
-        const colorDef = seg.rule ? TAJWEED_COLORS[seg.rule] : null
-        if (colorDef) {
-          return (
-            <span
-              key={i}
-              style={{ color: colorDef.color }}
-              title={`${colorDef.label} — ${colorDef.nameAr}`}
-            >
-              {seg.text}
-            </span>
-          )
-        }
-        return <span key={i}>{seg.text}</span>
-      })}
-    </span>
-  )
+  return <span dangerouslySetInnerHTML={{ __html: buildStyledHtml(html) }} />
 }
